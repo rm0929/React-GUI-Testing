@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; // Import Navigate instead of Redirect
 import './CheckoutPage.css';
 
-const CheckoutPage = ({ cart }) => {
-  const location = useLocation();
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
-  const [feedback, setFeedback] = useState('');
+const ThankYouPage = () => {
+  return (
+    <div className="thank-you-page">
+      <h2>Thank you for shopping!</h2>
+    </div>
+  );
+};
 
-  const handleFeedbackChange = (e) => {
-    setFeedback(e.target.value);
+const CheckoutPage = ({ cartItems, totalPrice }) => {
+  const [feedback, setFeedback] = useState('');
+  const [paid, setPaid] = useState(false);
+
+  const handlePay = () => {
+    // Implement payment logic here
+    // For now, just set paid to true
+    setPaid(true);
   };
+
+  if (paid) {
+    return <Navigate to="/thank-you" replace />; // Use Navigate instead of Redirect
+  }
 
   return (
     <div className="checkout-page">
@@ -17,10 +30,9 @@ const CheckoutPage = ({ cart }) => {
       <div className="selected-items">
         <h3>Selected Items</h3>
         <ul>
-          {cart.map(item => (
+          {cartItems?.map(item => (
             <li key={item.id}>
-              <img src={item.image} alt={item.name} />
-              {item.name}
+              {item.name} - ${item.price}
             </li>
           ))}
         </ul>
@@ -29,21 +41,12 @@ const CheckoutPage = ({ cart }) => {
         <h3>Total Price</h3>
         <p>${totalPrice}</p>
       </div>
-      <div className="feedback">
-        <h3>Feedback</h3>
-        <textarea
-          className="feedback-textbox"
-          placeholder="Leave your feedback here..."
-          value={feedback}
-          onChange={handleFeedbackChange}
-        />
-      </div>
       <form className="checkout-form">
         <input type="text" placeholder="Enter your name" />
         <input type="text" placeholder="Enter your address" />
         <input type="text" placeholder="Enter your email" />
       </form>
-      <Link to="./thankYou"><button className="pay-button">Pay</button></Link>
+      <button className="pay-button" onClick={handlePay}>Pay</button>
       <textarea
         className="feedback-textbox"
         placeholder="Leave your feedback here..."
@@ -55,5 +58,3 @@ const CheckoutPage = ({ cart }) => {
 };
 
 export default CheckoutPage;
-
-

@@ -1,11 +1,9 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { MemoryRouter,Routes, Route } from 'react-router-dom';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import ProductListingsPage from './ProductListingsPage';
 import ShoppingCartPage from './ShoppingCartPage';
 import CheckoutPage from './CheckoutPage';
-import ThankyouPage from './ThankyouPage';
 
 describe('ProductListingsPage', () => {
   // Test Case 1: Display products correctly
@@ -30,21 +28,21 @@ describe('ProductListingsPage', () => {
   });
 
   // Test Case 2: Update product list based on price slider
-  it('updates price range when slider is moved', () => {
-    // Mock function for addToCart
-    const addToCartMock = jest.fn();
+  it('updates product list based on price slider', () => {
+    render(
+      <MemoryRouter>
+        <ProductListingsPage addToCart={() => {}} />
+      </MemoryRouter>
+    );
 
-    // Render the ProductListingsPage component
-    const { getByRole } = render(<ProductListingsPage addToCart={addToCartMock} />);
+    // Move the price slider
+    const priceSlider = screen.getByRole('slider');
+    fireEvent.change(priceSlider, { target: { value: 40 } });
 
-    // Get the slider element
-    const slider = getByRole('slider');
-
-    // Change the value of the slider
-    fireEvent.change(slider, { target: { value: 20 } });
-
-    // Assert that the value of the slider has been updated
-    expect(slider.value).toBe('20');
+    // Check if products are filtered based on the slider value
+    const filteredProductNames = screen.queryAllByRole('heading');
+    expect(filteredProductNames.length).toBeGreaterThan(0);
+    expect(filteredProductNames.every(product => parseInt(product.textContent.split(' ')[1]) <= 40)).toBeTruthy();
   });
 
   // Test Case 3: Call addToCart function when "Add to Cart" button is clicked
@@ -82,19 +80,18 @@ describe('ProductListingsPage', () => {
   });
 
   // Test Case 5: Navigate to cart page when "View Cart" button is clicked
-  it('transitions to ShoppingCartPage when "View Cart" button is clicked', () => {
-    // Render the component with the Router
+  it('navigates to cart page when "View Cart" button is clicked', () => {
     render(
-      <Router>
-        <ProductListingsPage />
-      </Router>
+      <MemoryRouter>
+        <ProductListingsPage addToCart={() => {}} />
+      </MemoryRouter>
     );
 
     // Click the "View Cart" button
     const viewCartButton = screen.getByText('View Cart');
     fireEvent.click(viewCartButton);
 
-    // Check if the browser navigates to the /cart route
+    // Check if the browser history changed to '/cart'
     expect(window.location.pathname).toBe('/cart');
   });
 });
@@ -105,7 +102,7 @@ describe('ShoppingCartPage', () => {
     { id: 2, name: 'Product 2', price: 20, image: 'https://picsum.photos/200/300?random=2' }
   ];
 
-  // Test Case 6: Display shopping cart items
+  // Test Case 1: Display shopping cart items
   it('displays shopping cart items', () => {
     render(
       <MemoryRouter>
@@ -118,7 +115,7 @@ describe('ShoppingCartPage', () => {
     expect(cartItems.length).toBe(cart.length);
   });
 
-  // Test Case 7: Remove item from shopping cart
+  // Test Case 2: Remove item from shopping cart
   it('removes item from shopping cart when "Remove" button is clicked', () => {
     const removeFromCartMock = jest.fn();
     render(
@@ -143,48 +140,36 @@ describe('CheckoutPage', () => {
   ];
   const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
-  const cart = [
-    { id: 1, name: 'Product 1', price: 10 },
-    { id: 2, name: 'Product 2', price: 20 }
-  ];
-
-  const state = { cartItems: cart, totalPrice: totalPrice };
-
-  // Test Case 8: Display selected items and total price
+  // Test Case 1: Display selected items and total price
   it('displays selected items and total price', () => {
     render(
-      <MemoryRouter initialEntries={['/checkout']}>
-        <CheckoutPage cart={cart} />
+      <MemoryRouter>
+        <CheckoutPage cartItems={cartItems} totalPrice={totalPrice} />
       </MemoryRouter>
     );
 
     // Check if selected items are displayed
     const selectedItems = screen.getAllByRole('listitem');
-    expect(selectedItems.length).toBe(cart.length);
+    expect(selectedItems.length).toBe(cartItems.length);
 
     // Check if total price is displayed
-    const totalPriceElement = screen.getByText(`Total Price`);
+    const totalPriceElement = screen.getByText(`Total Price: $${totalPrice}`);
     expect(totalPriceElement).toBeInTheDocument();
   });
 
-  // Test Case 9: Pay button functionality
-  it('redirects to thank you page when "Pay" link is clicked and redirected to ThankyouPage', async() => {
+  // Test Case 2: Pay button functionality
+  it('redirects to thank you page when "Pay" button is clicked', () => {
     render(
-      <MemoryRouter initialEntries={['/checkout']}>
-        <CheckoutPage cart={cart} totalPrice={totalPrice} />
-        <Routes>
-          <Route path="/thankYou" element={<ThankyouPage />} />
-        </Routes>
+      <MemoryRouter>
+        <CheckoutPage cartItems={cartItems} totalPrice={totalPrice} />
       </MemoryRouter>
     );
-  
+
     // Click the "Pay" button
     const payButton = screen.getByText('Pay');
     fireEvent.click(payButton);
-  
-    // Wait for the "Thank You" text to appear
-    await waitFor(() => {
-      expect(screen.getByText('Thank You!')).toBeInTheDocument();
-    });
+
+    // Check if redirected to thank you page
+    expect(window.location.href).toBe('http://localhost/thank-you');
   });
 });

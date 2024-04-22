@@ -5,7 +5,6 @@ import ProductListingsPage from './ProductListingsPage';
 import ShoppingCartPage from './ShoppingCartPage';
 import CheckoutPage from './CheckoutPage';
 import './App.css';
-import ThankyouPage from './ThankyouPage';
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -30,7 +29,7 @@ function App() {
               <Link to="/cart">Shopping Cart ({cart.length})</Link>
             </li>
             <li>
-              <Link to="/checkout" >Checkout</Link>
+              <Link to="/checkout">Checkout</Link>
             </li>
           </ul>
         </nav>
@@ -39,7 +38,6 @@ function App() {
           <Route path="/" element={<ProductListingsPage addToCart={addToCart} />} />
           <Route path="/cart" element={<ShoppingCartPage cart={cart} removeFromCart={removeFromCart} />} />
           <Route path="/checkout" element={<CheckoutPage cart={cart} />} />
-          <Route path="/thankYou" element={<ThankyouPage />} />
         </Routes>
       </div>
     </Router>

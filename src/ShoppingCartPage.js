@@ -1,3 +1,4 @@
+// ShoppingCartPage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './ShoppingCartPage.css';
@@ -21,16 +22,7 @@ const ShoppingCartPage = ({ cart, removeFromCart }) => {
       </div>
       <div className="cart-summary">
         <p>Total: ${totalPrice}</p>
-        {/* Link to CheckoutPage with cart items and total price as state */}
-        <Link
-          to={{
-            pathname: "/checkout",
-            state: { cartItems: cart, totalPrice: totalPrice }
-          }}
-          className="checkout-button"
-        >
-          Proceed to Checkout
-        </Link>
+        <Link to="/checkout" className="checkout-button">Proceed to Checkout</Link>
       </div>
     </div>
   );
