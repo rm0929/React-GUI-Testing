@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1713493517328" clover="3.2.0">
+  <project timestamp="1713493517329" name="All files">
+    <metrics statements="34" coveredstatements="25" conditionals="2" coveredconditionals="2" methods="20" coveredmethods="13" elements="56" coveredelements="40" complexity="0" loc="34" ncloc="34" packages="1" files="5" classes="5"/>
+    <file name="App.js" path="E:\React\rm-project_v2\src\App.js">
+      <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+    </file>
+    <file name="CheckoutPage.js" path="E:\React\rm-project_v2\src\CheckoutPage.js">
+      <metrics statements="9" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="3"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="3" type="stmt"/>
+      <line num="7" count="6" type="stmt"/>
+      <line num="8" count="3" type="stmt"/>
+      <line num="10" count="3" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="14" count="3" type="stmt"/>
+      <line num="21" count="6" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
+    </file>
+    <file name="ProductListingsPage.js" path="E:\React\rm-project_v2\src\ProductListingsPage.js">
+      <metrics statements="13" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="6" coveredmethods="5"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="8" type="stmt"/>
+      <line num="22" count="8" type="stmt"/>
+      <line num="24" count="8" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="28" count="8" type="stmt"/>
+      <line num="29" count="2" type="stmt"/>
+      <line num="30" count="2" type="stmt"/>
+      <line num="33" count="64" type="stmt"/>
+      <line num="35" count="8" type="stmt"/>
+      <line num="56" count="40" type="stmt"/>
+      <line num="61" count="2" type="stmt"/>
+    </file>
+    <file name="ShoppingCartPage.js" path="E:\React\rm-project_v2\src\ShoppingCartPage.js">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="4" type="stmt"/>
+      <line num="8" count="2" type="stmt"/>
+      <line num="13" count="4" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+    </file>
+    <file name="ThankyouPage.js" path="E:\React\rm-project_v2\src\ThankyouPage.js">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="4" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
